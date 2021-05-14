@@ -9,16 +9,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RabbitmqdemoApplication implements CommandLineRunner {
 
-	@Autowired
-	private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
-	public static void main(String[] args) {
-		SpringApplication.run(RabbitmqdemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(RabbitmqdemoApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		rabbitTemplate
-				.convertAndSend("TestExChange","testRouting","Hello from code!");
-	}
+    @Override
+    public void run(String... args) throws Exception {
+
+        SimpleMessage simpleMessage = new SimpleMessage();
+        simpleMessage.setName("FirstMessage");
+        simpleMessage.setDescription("simpleDescription");
+        rabbitTemplate.convertAndSend("TestExChange", "testRouting", simpleMessage);
+    }
 }
